@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reload Options</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .button-container {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #response {
+            margin-top: 20px;
+        }
+        #trichview-content {
+            width: 100%; /* 根据需要调整宽度 */
+            height: 300px; /* 设置固定高度 */
+            overflow-y: auto; /* 允许垂直滚动 */
+            overflow-x: hidden; /* 隐藏水平滚动条 */
+            white-space: pre-wrap; /* 保持空白符和换行符 */
+            word-wrap: break-word; /* 长单词换行 */
+            box-sizing: border-box; /* 边框计算在宽度内 */
+        }
+    </style>
+    <script>
+        async function triggerReload(url) {
+            try {
+                const response = await fetch(url, {
+                    method: 'POST'
+                });
+                const text = await response.text();
+                document.getElementById('response').innerText = text;
+            } catch (error) {
+                document.getElementById('response').innerText = '请求失败: ' + error;
+            }
+        }
+
+        // 滚动状态变量，默认为开启自动滚动
+let autoScrollEnabled = true;
+
+// 切换滚动状态的函数
+function toggleScroll() {
+    autoScrollEnabled = !autoScrollEnabled; // 切换状态
+    const button = document.getElementById('toggleScroll');
+    button.innerText = autoScrollEnabled ? '关闭自动滚动' : '开启自动滚动'; // 更新按钮文本
+}
+
+         // 当获取到新内容后，滚动到底部
+    function scrollToBottom() {
+        const logDiv = document.getElementById('trichview-content');
+        logDiv.scrollTop = logDiv.scrollHeight;
+    }
+
+   // 修改 fetchTRichViewContent 函数以使用滚动状态
+async function fetchTRichViewContent() {
+    try {
+        const response = await fetch("/getTRichViewContent");
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const data = await response.json();
+        document.getElementById("trichview-content").innerHTML = data.content;
+        if (autoScrollEnabled) {
+            scrollToBottom(); // 如果自动滚动开启，则滚动到底部
+        }
+    } catch (error) {
+        console.error("Fetching TRichView content failed:", error);
+    }
+}
+
+    // 页面加载时立即获取一次内容，并滚动到底部
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchTRichViewContent();
+        scrollToBottom(); // 页面加载时也滚动到底部
+    });
+
+    // 每秒获取一次TRichView内容，并滚动到底部
+    setInterval(fetchTRichViewContent, 1000);
+    </script>
+</head>
+<body>
+    <h1>Trigger Reload Options</h1>
+    <div class="button-container">
+        <button onclick="triggerReload('/reloadGoos')">重载物品</button>
+    </div>
+    <div class="button-container">
+        <button onclick="triggerReload('/reloadSkiis')">重载技能</button>
+    </div>
+    <div class="button-container">
+        <button onclick="triggerReload('/reloadMonster')">重载怪物</button>
+    </div>
+    <div class="button-container">
+        <button onclick="triggerReload('/reloadQManage')">重载QManage</button>
+    </div>
+    <div class="button-container">
+        <button onclick="triggerReload('/reloadQFunction')">重载QFunction</button>
+    </div>
+    <div class="button-container">
+        <button onclick="triggerReload('/reloadNPC')">重载NPC</button>
+    </div>
+    <div id="response"></div>
+    <div class="button-container">
+        <button id="toggleScroll" onclick="toggleScroll()">切换自动滚动</button>
+    </div>
+    <h1>日志</h1>
+    <div id="trichview-content"></div>
+</body>
+</html>
