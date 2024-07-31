@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,30 +87,36 @@ async function fetchTRichViewContent() {
     </script>
 </head>
 <body>
-    <h1>Trigger Reload Options</h1>
-    <div class="button-container">
-        <button onclick="triggerReload('/reloadGoos')">重载物品</button>
+    <div style="display: flex;">
+        <div>
+            <h1>Trigger Reload Options</h1>
+        <div class="button-container">
+            <button onclick="triggerReload('/reloadGoos')">重载物品</button>
+        </div>
+        <div class="button-container">
+            <button onclick="triggerReload('/reloadSkiis')">重载技能</button>
+        </div>
+        <div class="button-container">
+            <button onclick="triggerReload('/reloadMonster')">重载怪物</button>
+        </div>
+        <div class="button-container">
+            <button onclick="triggerReload('/reloadQManage')">重载QManage</button>
+        </div>
+        <div class="button-container">
+            <button onclick="triggerReload('/reloadQFunction')">重载QFunction</button>
+        </div>
+        <div class="button-container">
+            <button onclick="triggerReload('/reloadNPC')">重载NPC</button>
+        </div>
+        <div id="response"></div>
+        <div class="button-container">
+            <button id="toggleScroll" onclick="toggleScroll()">切换自动滚动</button>
+        </div>
+        </div>
+        <div>
+            <h1>日志（日志乱码清除日志刷新网页即可）</h1>
+        <div id="trichview-content"></div>
+        </div>
     </div>
-    <div class="button-container">
-        <button onclick="triggerReload('/reloadSkiis')">重载技能</button>
-    </div>
-    <div class="button-container">
-        <button onclick="triggerReload('/reloadMonster')">重载怪物</button>
-    </div>
-    <div class="button-container">
-        <button onclick="triggerReload('/reloadQManage')">重载QManage</button>
-    </div>
-    <div class="button-container">
-        <button onclick="triggerReload('/reloadQFunction')">重载QFunction</button>
-    </div>
-    <div class="button-container">
-        <button onclick="triggerReload('/reloadNPC')">重载NPC</button>
-    </div>
-    <div id="response"></div>
-    <div class="button-container">
-        <button id="toggleScroll" onclick="toggleScroll()">切换自动滚动</button>
-    </div>
-    <h1>日志</h1>
-    <div id="trichview-content"></div>
 </body>
 </html>

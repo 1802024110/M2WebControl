@@ -13,6 +13,12 @@ IF %ERRORLEVEL% NEQ 0 (
     exit /b %ERRORLEVEL%
 )
 
+:: 创建一个hwnd.txt文件，内容为空
+echo. > hwnd.txt
+
+:: 复制 hwnd.txt 文件到打包后的 dist 目录
+copy hwnd.txt "%DIST_DIR%\hwnd.txt"
+
 :: 复制 templates 目录到打包后的 dist 目录
 xcopy /E /I /Y "templates" "%DIST_DIR%\templates"
 
