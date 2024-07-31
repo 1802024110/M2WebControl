@@ -1,3 +1,5 @@
 Lib/site-packages/*
 build/*
 dist/*
+app.log
+hwnd.txt
